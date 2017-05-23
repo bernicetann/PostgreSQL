@@ -11,6 +11,12 @@ const client = new pg.Client({
   ssl      : settings.ssl
 });
 
+function logPeople(people) {
+  people.forEach(function (person) {
+    console.log("-", person.id, ":", person.first_name, person.last_name, "born", person.birthdate);
+  })
+}
+
 client.connect((err) => {
   if (err) {
     return console.error("Connection Error", err);
@@ -19,7 +25,7 @@ client.connect((err) => {
     if (err) {
       return console.error("error running query", err);
     }
-    console.log("-", result.rows[0].id, ":", result.rows[0].first_name, result.rows[0].last_name, "born", result.rows[0].birthdate);
+    logPeople(result.rows);
     client.end();
   });
 });
